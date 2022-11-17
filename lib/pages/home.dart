@@ -40,7 +40,12 @@ class _HomePageState extends State<HomePage> {
             reverseDuration: _pageSwitchDuration,
             switchInCurve: _pageSwitchCurve,
             switchOutCurve: _pageSwitchCurve,
-            child: showcaseItemsList[index].pageBuilder(context),
+            child: Builder(
+              key: ValueKey(index),
+              builder: (context) {
+                return showcaseItemsList[index].pageBuilder(context);
+              },
+            ),
           );
         },
       ),
@@ -52,6 +57,7 @@ class _HomePageState extends State<HomePage> {
               title: Text(showcaseItemsList[index].name),
               onTap: () {
                 _pageIndexNotifier.value = index;
+                Navigator.of(context).pop();
               },
             );
           },
