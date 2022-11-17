@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class CirclesPatternShowcase extends StatefulWidget {
@@ -44,8 +43,7 @@ class _CirclesPatternShowcaseState extends State<CirclesPatternShowcase>
         return CustomPaint(
           key: const Key('circles-pattern'),
           painter: _CirclesPatternPainter(_animation),
-          // isComplex: true,
-          willChange: kDebugMode,
+          willChange: true,
           child: const SizedBox.expand(),
         );
       },
@@ -121,8 +119,5 @@ class _CirclesPatternPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(_CirclesPatternPainter oldDelegate) => kDebugMode;
-
-  @override
-  bool shouldRebuildSemantics(_CirclesPatternPainter oldDelegate) => kDebugMode;
+  bool shouldRepaint(_CirclesPatternPainter oldDelegate) => true;
 }
