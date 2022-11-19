@@ -108,7 +108,7 @@ class _CirclesPatternPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = Tween<double>(
         begin: 3,
-        end: 1.75,
+        end: 1.666,
       ).animate(animation).value
       ..shader = RadialGradient(
         colors: gradientColors
@@ -129,21 +129,40 @@ class _CirclesPatternPainter extends CustomPainter {
     final circleCount = 32 * animation.value;
     final radianStep = (math.pi * 2) / circleCount;
 
+    final double padding = (paint.strokeWidth / 2) + 20;
+    final double maxRadius = (size.shortestSide / 2) - padding;
+    final double circlesRadius = maxRadius / 2.5; // 100
+    final double circlesMaxDistance = maxRadius - circlesRadius; // 130
+    final double circlesMinDistance = maxRadius - 60 - circlesRadius; // 70
+    final double circlesDistance = Tween<double>(
+      begin: circlesMinDistance,
+      end: circlesMaxDistance,
+    ).animate(distanceInterval).value; // begin: 70, end: 160,
+
+    final double minSquaresRadius = circlesRadius - 30;
+    final double maxSquaresRadius = circlesRadius;
+
+    final squaresRadius = Radius.circular(
+      Tween<double>(
+        begin: maxSquaresRadius,
+        end: minSquaresRadius, // (begin: 160, end: 66)
+      ).animate(borderRadiusInterval).value,
+    );
+
     for (var i = 0; i < circleCount; i++) {
       final offset = Offset.fromDirection(
         radianStep * i + (math.pi * 2 * animation.value),
-        Tween<double>(begin: 70, end: 160).animate(distanceInterval).value,
+        circlesDistance,
       );
 
       final path = Path()
         ..addRRect(
           RRect.fromRectAndRadius(
-            Rect.fromCircle(center: offset, radius: 100),
-            Radius.circular(
-              Tween<double>(begin: 160, end: 66)
-                  .animate(borderRadiusInterval)
-                  .value,
-            ),
+            Rect.fromCircle(
+              center: offset,
+              radius: circlesRadius,
+            ), // radius: 100
+            squaresRadius,
           ),
         );
 
