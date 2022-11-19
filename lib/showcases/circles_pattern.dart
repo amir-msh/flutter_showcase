@@ -103,18 +103,26 @@ class _CirclesPatternPainter extends CustomPainter {
           radius: size.width / 2,
         ),
       )
-      ..isAntiAlias = true; // !kDebugMode
+      ..isAntiAlias = true;
 
+    final double padding = (paint.strokeWidth / 2) + 20;
+    final double maxRadius = (size.shortestSide / 2) - padding;
+    final double circlesRadius = maxRadius / 2.5; // 100
+    final double circlesMaxDistance = maxRadius - circlesRadius; // 130
+    final double circlesMinDistance = maxRadius - 50 - circlesRadius; // 70
     final circleCount = 33 * animation.value;
     final radianStep = (math.pi * 2) / circleCount;
 
     for (var i = 0; i < circleCount; i++) {
       final offset = Offset.fromDirection(
         radianStep * i + (math.pi * 2 * animation.value),
-        Tween<double>(begin: 70, end: 130).animate(distanceInterval).value,
+        Tween<double>(
+          begin: circlesMinDistance,
+          end: circlesMaxDistance,
+        ).animate(distanceInterval).value,
       );
 
-      canvas.drawCircle(offset, 100, paint);
+      canvas.drawCircle(offset, circlesRadius, paint);
     }
   }
 

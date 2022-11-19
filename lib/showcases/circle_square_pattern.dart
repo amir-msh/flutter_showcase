@@ -26,6 +26,7 @@ class _CircleSquarePatternShowcaseState
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.easeInOut,
+        reverseCurve: Curves.fastLinearToSlowEaseIn,
       ),
     );
     super.initState();
@@ -78,14 +79,18 @@ class _CirclesPatternPainter extends CustomPainter {
         parent: animation,
         curve: const Interval(0.20, 0.9),
       ),
-      curve: Curves.bounceInOut,
+      curve: animation.status == AnimationStatus.reverse
+          ? Curves.easeInOut
+          : Curves.bounceInOut,
     );
     final borderRadiusInterval = CurvedAnimation(
       parent: CurvedAnimation(
         parent: animation,
         curve: const Interval(0.20, 0.9),
       ),
-      curve: Curves.bounceInOut,
+      curve: animation.status == AnimationStatus.reverse
+          ? Curves.easeInOut
+          : Curves.bounceInOut,
     );
     final rotateInterval = CurvedAnimation(
       parent: CurvedAnimation(
@@ -135,7 +140,7 @@ class _CirclesPatternPainter extends CustomPainter {
           RRect.fromRectAndRadius(
             Rect.fromCircle(center: offset, radius: 100),
             Radius.circular(
-              Tween<double>(begin: 200, end: 75)
+              Tween<double>(begin: 160, end: 66)
                   .animate(borderRadiusInterval)
                   .value,
             ),

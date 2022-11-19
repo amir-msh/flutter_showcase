@@ -50,17 +50,42 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       drawer: Drawer(
-        child: ListView.builder(
-          itemCount: showcaseItemsList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(showcaseItemsList[index].name),
-              onTap: () {
-                _pageIndexNotifier.value = index;
-                Navigator.of(context).pop();
-              },
-            );
-          },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: const BorderRadius.only(
+                  bottomRight: Radius.circular(25),
+                ),
+              ),
+              clipBehavior: Clip.antiAlias,
+              padding: const EdgeInsets.fromLTRB(15, 15, 10, 15),
+              child: Text(
+                'Showcases',
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      color: Colors.white,
+                    ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: showcaseItemsList.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(showcaseItemsList[index].name),
+                    onTap: () {
+                      _pageIndexNotifier.value = index;
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
