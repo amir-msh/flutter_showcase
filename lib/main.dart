@@ -21,6 +21,13 @@ class App extends StatelessWidget {
             ),
           ),
         ),
+        drawerTheme: const DrawerThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.horizontal(
+              right: Radius.circular(25),
+            ),
+          ),
+        ),
       ),
       home: const HomePage(),
     );

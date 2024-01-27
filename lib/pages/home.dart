@@ -50,6 +50,8 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       drawer: Drawer(
+        width: 340,
+        clipBehavior: Clip.none,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
